@@ -1,4 +1,5 @@
 import time
+import time
 import ast
 import os
 from pathlib import Path
@@ -22,10 +23,10 @@ def pesquisa_keywords(tipo,message):
             #registro_completo = str(linha_json_str) + ";" + "Encontrado" + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + "\n"
             registro_completo = diretorio + ";" + \
                                 str(linha_json['url']) + ";" + \
-                                str(linha_json['text']) + ";" + \
+                                str(texto) + ";" + \
                                 str(linha_json['score']) + ";" + \
                                 str(linha_json['scoreText']) + ";" + \
-                                str(linha_json['replyText']) + ";" + \
+                                str(resposta) + ";" + \
                                 "Encontrado" + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + "\n"
             arquivo_comentarios_separado.write(registro_completo)
             quantidade_encontrada = quantidade_encontrada + 1
@@ -92,7 +93,7 @@ for filename in Path(pasta).rglob("*.txt"):
     arquivoreviewssentrada = str(filename)
     arquivo_reviews_entrada = open(arquivoreviewssentrada, 'r', encoding="utf-8")
 
-    diretorio = os.path.dirname(filename)[18:len(os.path.dirname(filename))]
+    diretorio = os.path.dirname(filename)[12:len(os.path.dirname(filename))]
 
     #LOOP DE LINHAS DENTRO DE CADA ARQUIVO
     for linha in arquivo_reviews_entrada:
@@ -150,10 +151,10 @@ for filename in Path(pasta).rglob("*.txt"):
             #print('pasta: ',os.path.dirname(filename),' tamanho do caminho:', len(os.path.dirname(filename)))
             registro_completo = diretorio + ";" + \
                                 str(linha_json['url']) + ";" + \
-                                str(linha_json['text']) + ";" + \
+                                str(texto) + ";" + \
                                 str(linha_json['score']) + ";" + \
                                 str(linha_json['scoreText']) + ";" + \
-                                str(linha_json['replyText']) + ";" + \
+                                str(resposta) + ";" + \
                                 "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
 #            registro_completo = str(linha_json_str) + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
             arquivo_comentarios_separado.write(registro_completo)
@@ -166,8 +167,8 @@ for filename in Path(pasta).rglob("*.txt"):
         #linha_impressa = str(linha_json)+ ";" + str(linha_json['text']) + ";" + str(linha_json['replyText']) + "\n"
         #arquivo_comentarios_separado.write(linha_impressa)
         #PARADA PARA AGILIZAR TESTES
-        #if numero_linhas_total == 4:
-        #    quit()
+        if numero_linhas_total == 600:
+            quit(-2)
 
     #FECHAMENTO DO ARQUIVO
     arquivo_reviews_entrada.close()
