@@ -29,6 +29,17 @@ def pesquisa_keywords(tipo,message):
                                 str(resposta) + ";" + \
                                 "Encontrado" + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + "\n"
             arquivo_comentarios_separado.write(registro_completo)
+
+            registro_completo_reduzido = diretorio + ";" + \
+                                str(linha_json['url']) + ";" + \
+                                str(textoreduzido) + ";" + \
+                                str(linha_json['score']) + ";" + \
+                                str(linha_json['scoreText']) + ";" + \
+                                str(respostareduzido) + ";" + \
+                                "Encontrado" + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + "\n"
+            arquivo_comentarios_separado_reduzido.write(registro_completo_reduzido)
+
+
             quantidade_encontrada = quantidade_encontrada + 1
         j = j + 1
     return quantidade_encontrada
@@ -44,10 +55,12 @@ contagem_displays = 500
 
 #NOMES DE ARQUIVOS
 arquivocomentariosseparado = 'arquivocomentarios_separado_V7.txt'
+arquivocomentariosseparadoreduzido = 'arquivocomentarios_separado_reduzido_V7.txt'
 keywordsfile = 'keywordslist_V2 - sem duplicidades.csv'
 
 #ABERTURA DOS ARQUIVOS
 arquivo_comentarios_separado = open(arquivocomentariosseparado, 'w',encoding="utf-8")
+arquivo_comentarios_separado_reduzido = open(arquivocomentariosseparadoreduzido, 'w',encoding="utf-8")
 arquivo_entrada_keywords = open(keywordsfile, 'r',encoding="utf-8")
 
 #DEFINIÇÃO DO DICIONÁRIO DE LEITURA DO ARQUIVO DE ENTRADA
@@ -121,6 +134,7 @@ for filename in Path(pasta).rglob("*.txt"):
         texto = texto.replace("\t","|")
         texto = texto.replace("\n", "|")
         texto = texto.replace("\r","|")
+        textoreduzido = str(texto)[1:2046]
         # EXIBIÇÃO DE LINHA PARA INVESTIGAÇÃO DE ERROS
         #print("texto: ", texto)
 
@@ -134,6 +148,7 @@ for filename in Path(pasta).rglob("*.txt"):
         resposta = resposta.replace("\t","|")
         resposta = resposta.replace("\n", "|")
         resposta = resposta.replace("\r","|")
+        respostareduzido = str(resposta)[1:2046]
         # EXIBIÇÃO DE LINHA PARA INVESTIGAÇÃO DE ERROS
         #print("resposta: ", resposta)
 
@@ -158,6 +173,17 @@ for filename in Path(pasta).rglob("*.txt"):
                                 "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
 #            registro_completo = str(linha_json_str) + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
             arquivo_comentarios_separado.write(registro_completo)
+
+            registro_completo_reduzido = diretorio + ";" + \
+                                str(linha_json['url']) + ";" + \
+                                str(textoreduzido) + ";" + \
+                                str(linha_json['score']) + ";" + \
+                                str(linha_json['scoreText']) + ";" + \
+                                str(respostareduzido) + ";" + \
+                                "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
+            #            registro_completo = str(linha_json_str) + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
+            arquivo_comentarios_separado_reduzido.write(registro_completo_reduzido)
+
             saida = saida + 1
             naoencontrados = naoencontrados + 1
 
@@ -168,7 +194,7 @@ for filename in Path(pasta).rglob("*.txt"):
         #arquivo_comentarios_separado.write(linha_impressa)
         #PARADA PARA AGILIZAR TESTES
         if numero_linhas_total == 600:
-            quit(-2)
+           quit(-2)
 
     #FECHAMENTO DO ARQUIVO
     arquivo_reviews_entrada.close()
