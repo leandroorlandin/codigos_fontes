@@ -13,7 +13,7 @@ def imprime_time():
 
 #DEFINIÇÃO DOS ARQUIVOS
 arquivoentrada = 'arquivoissues_separado - V7.4.csv'
-arquivosaida = 'TESTE - arquivoissues_separado_semdupls - V7.4.txt'
+arquivosaida = 'arquivoissues_separado_semdupls - V7.4.txt'
 
 print("INICIO DO PGM")
 imprime_time()
