@@ -13,14 +13,15 @@ def imprime_time():
 
 #DEFINIÇÃO DOS ARQUIVOS
 arquivoentrada = 'arquivoissues_separado - V7.4.csv'
-arquivosaida = 'arquivoissues_separado_semdupls - V7.4.txt'
+arquivosaida = 'TESTE - arquivoissues_separado_semdupls - V7.4.txt'
+
+print("INICIO DO PGM")
+imprime_time()
 
 #ABERTURA DOS ARQUIVOS
 arquivo_entrada = pd.read_csv(arquivoentrada,encoding='utf-8', delimiter=';')
 #arquivo_saida = open(arquivosaida, 'w',encoding="utf-8")
 
-print("INICIO DO PGM")
-imprime_time()
 
 print('*************')
 print('TAMANHO ARQUIVO ENTRADA: ', len(arquivo_entrada))
@@ -29,7 +30,8 @@ print('*************')
 print('***RETIRADA DA DUPLICIDADE*****')
 arquivo_entrada = arquivo_entrada.drop_duplicates()
 imprime_time()
-arquivo_entrada.to_csv(r'arquivoissues_separado_semdupls - V7.4.csv', sep=';', encoding='utf-8', header='true')
+#arquivo_entrada.to_csv(r'arquivoissues_separado_semdupls - V7.4.csv', sep=';', encoding='utf-8', header='true')
+arquivo_entrada.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=False)
 imprime_time()
 print('TAMANHO ARQUIVO SAIDA: ', len(arquivo_entrada))
 
