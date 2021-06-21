@@ -19,7 +19,7 @@ def pesquisa_keywords(message):
     encontrado = "Encontrado"
     while j < len(keyword):
         if keyword[j] in message:
-            registro_completo = url + ";" + data + ";" + encontrado + ";" + keyword[j] + ";" + wcag[j] + ";" + \
+            registro_completo = source_location + ";" + url + ";" + data + ";" + encontrado + ";" + keyword[j] + ";" + wcag[j] + ";" + \
                                 mensagem + "\n"
             arquivo_commits_separado.write(registro_completo)
             quantidade_encontrada = quantidade_encontrada + 1
@@ -53,7 +53,7 @@ print("INICIO DO PGM")
 imprime_time()
 
 #GRAVA HEADER DO ARQUIVO DE SAIDA
-linha_header = "commit" + ";" + "time" + ";" + "encontrado? " + ";" + "keyword" + ";" + "wcag" + ";" + "message" + "\n"
+linha_header = "source_location" + ";" + "commit" + ";" + "time" + ";" + "seencontrado" + ";" + "keyword" + ";" + "wcag" + ";" + "message" + "\n"
 arquivo_commits_separado.write(linha_header)
 
 i = 0
@@ -80,9 +80,11 @@ for linha in arquivo_commits_json:
         data = commit['commit']['committer']['date']
         mensagem = commit['commit']['message']
 
-        repositorio = commit['html_url']
-        print('repositório: ', repositorio)
-        quit(-2)
+        auxiliar = commit['html_url']
+        auxiliar2 = "/commit/"
+        posicao = auxiliar.find(auxiliar2)
+        source_location = auxiliar[0:posicao]
+        #print("posicao_commit", auxiliar[0:posicao])
 
         if len(mensagem) > 25000:
             mensagem = "DESCARTE-TAMANHO"
@@ -100,12 +102,16 @@ for linha in arquivo_commits_json:
 
         #TRATA SE NÃO ENCONTRA NO TEXTO DO COMMIT
         if seencontrado == 0:
-            registro_completo = url + ";" + data + ";" + "Nao Encontrado" + ";" + "" + ";" + "" + ";" + mensagem + "\n"
+            registro_completo = source_location + ";" + url + ";" + data + ";" + "Nao Encontrado" + ";" + "" + ";" + "" + ";" + mensagem + "\n"
             arquivo_commits_separado.write(registro_completo)
             saida = saida + 1
             naoencontrados = naoencontrados + 1
         #INCREMENTA O NÚMERO DE LINHAS DE ENTRADA
         linha2 = linha2 + 1
+
+        #IF PARA TESTE - PARADA APÓS 1000 REGISTROS GRAVADOS
+        #if saida > 1000:
+        #    quit(-2)
 
 #FINALIZAÇÃO DO PROGRAMA:
 
