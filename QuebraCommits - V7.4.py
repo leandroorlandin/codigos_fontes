@@ -80,6 +80,10 @@ for linha in arquivo_commits_json:
         data = commit['commit']['committer']['date']
         mensagem = commit['commit']['message']
 
+        repositorio = commit['html_url']
+        print('repositório: ', repositorio)
+        quit(-2)
+
         if len(mensagem) > 25000:
             mensagem = "DESCARTE-TAMANHO"
             descarte = descarte + 1

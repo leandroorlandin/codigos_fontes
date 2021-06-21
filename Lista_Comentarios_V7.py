@@ -78,6 +78,19 @@ print("pasta com todas as reviews: ", pasta)
 print("pastas das aplicações: ", pastas_aplicacoes)
 print("total de aplicações: ", len(pastas_aplicacoes) - 1)
 
+#GRAVA HEADER DO ARQUIVO
+registro_header = "aplicativo" + ";" + \
+                             "url" + ";" + \
+                             "texto" + ";" + \
+                             "score" + ";" + \
+                             "scoretext" + ";" + \
+                             "resposta" + ";" + \
+                             "seencontrado" + ";" + \
+                             "tipo" + ";" + \
+                             "palavra" + ";" + \
+                             "wcag" + "\n"
+            arquivo_comentarios_separado_reduzido.write(registro_header)
+
 #CONTADORES DE LINHAS E ARQUIVOS
 numero_linhas_total = 0
 numero_arquivos_total = 0
