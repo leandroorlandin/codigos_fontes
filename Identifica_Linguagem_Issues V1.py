@@ -20,10 +20,10 @@ arquivosaida = 'arquivoissues_separado_semdupls_language - V7.4.csv'
 #DEFINIÇÃO DO DICIONÁRIO DE LEITURA DO ARQUIVO DE ENTRADA
 #id;commit;time;encontrado? ;keyword;wcag;message
 with open(arquivoentrada, encoding="utf-8") as csv_file_entrada:
-    csv_reader = csv.DictReader(csv_file_entrada, delimiter=';', fieldnames=["numeracao_linha",
-                                                                             "url",
-                                                                             "horario",
-                                                                             "identificado",
+    csv_reader = csv.DictReader(csv_file_entrada, delimiter=';', fieldnames=["source_location",
+                                                                             "issue",
+                                                                             "time",
+                                                                             "seencontrado",
                                                                              "tipo",
                                                                              "keyword",
                                                                              "wcag",
@@ -33,10 +33,10 @@ with open(arquivoentrada, encoding="utf-8") as csv_file_entrada:
 
 # ABERTURA ARQUIVO DE SAIDA
     with open(arquivosaida, mode='w', encoding="utf-8", newline='') as csv_file_saida:
-        fieldnames = ["numeracao_linha",
-                      "url",
-                      "horario",
-                      "identificado",
+        fieldnames = ["source_location",
+                      "issue",
+                      "time",
+                      "seencontrado",
                       "tipo",
                       "keyword",
                       "wcag",

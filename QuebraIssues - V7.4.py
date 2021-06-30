@@ -20,7 +20,8 @@ def pesquisa_keywords(tipo,message):
     encontrado = "Encontrado"
     while j < len(keyword):
         if keyword[j] in message:
-            registro_completo = url + ";" + data + ";" + encontrado + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + \
+            registro_completo = source_location + ";" + \
+                                url + ";" + data + ";" + encontrado + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + \
                                 ";" + titulo + ";" + body + "\n"
             arquivo_issues_separado.write(registro_completo)
             quantidade_encontrada = quantidade_encontrada + 1
@@ -28,7 +29,7 @@ def pesquisa_keywords(tipo,message):
     return quantidade_encontrada
 
 #DEFINIÇÃO DOS ARQUIVOS
-arquivoissuesjson = 'arquivoissues.json'
+arquivoissuesjson = 'arquivoissues - V1.json'
 #arquivoissuesjson = 'arquivoissues - validado - teste.json'
 #arquivoissuesseparado = 'arquivoissues_separado.txt'
 arquivoissuesseparado = 'arquivoissues_separado - V7.4.csv'
@@ -54,9 +55,10 @@ print("INICIO DO PGM")
 imprime_time()
 
 #GRAVA HEADER DO ARQUIVO DE SAIDA
-linha_header = "url" + ";" + "time" + ";" + "encontrado? " + ";" + "tipo" + ";" + "keyword" + ";" + "wcag" + \
-               ";" + "title" + ";" + "body" + "\n"
+linha_header = "source_location" + ";" + "issue" + ";" + "time" + ";" + "seencontrado" + ";" + "tipo" + ";" + \
+               "keyword" + ";" + "wcag" + ";" + "titulo" + ";" + "body" + "\n"
 arquivo_issues_separado.write(linha_header)
+
 
 i = 0
 saida = 0
@@ -78,6 +80,13 @@ for linha in arquivo_issues_json:
     linha2 = 0
     while linha2 < len(retorno_consulta_json):
         issue = retorno_consulta_json[linha2]
+
+        auxiliar = issue['repository_url']
+        #print("source location depois: ", auxiliar)
+        auxiliar = auxiliar.replace("api.", "")
+        auxiliar = auxiliar.replace("repos/", "")
+        #print("source location depois: ", auxiliar)
+        source_location = auxiliar
 
         url = issue['url']
         data = issue['created_at']
@@ -120,7 +129,8 @@ for linha in arquivo_issues_json:
 
         #TRATA SE NÃO ENCONTRA NEM NO TITULO NEM NO BODY
         if seencontrado == 0 and seencontrado_body == 0:
-            registro_completo = url + ";" + data + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + ";" + \
+            registro_completo = source_location + ";" + \
+                                url + ";" + data + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + ";" + \
                                 titulo + ";" + body + "\n"
             arquivo_issues_separado.write(registro_completo)
             saida = saida + 1
@@ -129,6 +139,9 @@ for linha in arquivo_issues_json:
         #INCREMENTA O NÚMERO DE LINHAS DE ENTRADA
         linha2 = linha2 + 1
 
+        #IF PARA TESTE - PARADA APÓS 1000 REGISTROS GRAVADOS
+        #if saida > 1000:
+        #    quit(-2)
 
 #FINALIZAÇÃO DO PROGRAMA:
 
