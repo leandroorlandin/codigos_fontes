@@ -13,17 +13,17 @@ def imprime_time():
     print(result)
 
 #DEFINIÇÃO DOS ARQUIVOS
-arquivoentrada = 'arquivocommits_separado_semdupls - V7.4.csv'
+arquivoentrada = 'arquivocommits_separado_semdupls - V7.4.txt'
 arquivosaida = 'arquivocommits_separado_semdupls_language - V7.4.csv'
 
 
 #DEFINIÇÃO DO DICIONÁRIO DE LEITURA DO ARQUIVO DE ENTRADA
 #id;commit;time;encontrado? ;keyword;wcag;message
 with open(arquivoentrada, encoding="utf-8") as csv_file_entrada:
-    csv_reader = csv.DictReader(csv_file_entrada, delimiter=';', fieldnames=["numeracao_linha",
-                                                                             "url",
-                                                                             "horario",
-                                                                             "identificado",
+    csv_reader = csv.DictReader(csv_file_entrada, delimiter=';', fieldnames=["source_location",
+                                                                             "commit",
+                                                                             "time",
+                                                                             "seencontrado",
                                                                              "keyword",
                                                                              "wcag",
                                                                              "message"])
@@ -31,10 +31,10 @@ with open(arquivoentrada, encoding="utf-8") as csv_file_entrada:
 
 # ABERTURA ARQUIVO DE SAIDA
     with open(arquivosaida, mode='w', encoding="utf-8", newline='') as csv_file_saida:
-        fieldnames = ["numeracao_linha",
-                      "url",
-                      "horario",
-                      "identificado",
+        fieldnames = ["source_location",
+                      "commit",
+                      "time",
+                      "seencontrado",
                       "keyword",
                       "wcag",
                       "message",
@@ -60,7 +60,7 @@ with open(arquivoentrada, encoding="utf-8") as csv_file_entrada:
             ###############################
             #CONTADORES E STATUS
             ###############################
-            #if total_registros == 500:
+            #if total_registros == 10:
             #    imprime_time()
             #    quit(2)
             if registros_loop == 10000:
@@ -71,6 +71,7 @@ with open(arquivoentrada, encoding="utf-8") as csv_file_entrada:
             ###############################
             #VERIFICAÇÃO LINGUAGEM TITULO
             ###############################
+            #print("str(row[message]: ", str(row["message"]))
             try:
                 langmessage = detect(str(row["message"]))
             except:
