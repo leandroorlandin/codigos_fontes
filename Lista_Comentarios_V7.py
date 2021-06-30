@@ -27,6 +27,8 @@ def pesquisa_keywords(tipo,message):
                                 str(linha_json['score']) + ";" + \
                                 str(linha_json['scoreText']) + ";" + \
                                 str(resposta) + ";" + \
+                                str(linha_json['date']) + ";" + \
+                                str(linha_json['replyDate']) + ";" + \
                                 "Encontrado" + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + "\n"
             arquivo_comentarios_separado.write(registro_completo)
 
@@ -36,6 +38,8 @@ def pesquisa_keywords(tipo,message):
                                 str(linha_json['score']) + ";" + \
                                 str(linha_json['scoreText']) + ";" + \
                                 str(respostareduzido) + ";" + \
+                                str(linha_json['date']) + ";" + \
+                                str(linha_json['replyDate']) + ";" + \
                                 "Encontrado" + ";" + tipo + ";" + keyword[j] + ";" + wcag[j] + "\n"
             arquivo_comentarios_separado_reduzido.write(registro_completo_reduzido)
 
@@ -85,11 +89,14 @@ registro_header = "aplicativo" + ";" + \
                              "score" + ";" + \
                              "scoretext" + ";" + \
                              "resposta" + ";" + \
+                             "data" + ";" + \
+                             "data_resposta" + ";" + \
                              "seencontrado" + ";" + \
                              "tipo" + ";" + \
                              "palavra" + ";" + \
                              "wcag" + "\n"
-            arquivo_comentarios_separado_reduzido.write(registro_header)
+arquivo_comentarios_separado_reduzido.write(registro_header)
+arquivo_comentarios_separado.write(registro_header)
 
 #CONTADORES DE LINHAS E ARQUIVOS
 numero_linhas_total = 0
@@ -183,6 +190,8 @@ for filename in Path(pasta).rglob("*.txt"):
                                 str(linha_json['score']) + ";" + \
                                 str(linha_json['scoreText']) + ";" + \
                                 str(resposta) + ";" + \
+                                str(linha_json['date']) + ";" + \
+                                str(linha_json['replyDate']) + ";" + \
                                 "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
 #            registro_completo = str(linha_json_str) + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
             arquivo_comentarios_separado.write(registro_completo)
@@ -193,6 +202,8 @@ for filename in Path(pasta).rglob("*.txt"):
                                 str(linha_json['score']) + ";" + \
                                 str(linha_json['scoreText']) + ";" + \
                                 str(respostareduzido) + ";" + \
+                                str(linha_json['date']) + ";" + \
+                                str(linha_json['replyDate']) + ";" + \
                                 "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
             #            registro_completo = str(linha_json_str) + ";" + "Não Encontrado" + ";" + "" + ";" + "" + ";" + "" + "\n"
             arquivo_comentarios_separado_reduzido.write(registro_completo_reduzido)
@@ -206,8 +217,8 @@ for filename in Path(pasta).rglob("*.txt"):
         #linha_impressa = str(linha_json)+ ";" + str(linha_json['text']) + ";" + str(linha_json['replyText']) + "\n"
         #arquivo_comentarios_separado.write(linha_impressa)
         #PARADA PARA AGILIZAR TESTES
-        #if numero_linhas_total == 600:
-        #   quit(-2)
+        if numero_linhas_total == 600:
+           quit(-2)
 
     #FECHAMENTO DO ARQUIVO
     arquivo_reviews_entrada.close()
