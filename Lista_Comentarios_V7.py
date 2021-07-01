@@ -127,6 +127,9 @@ for filename in Path(pasta).rglob("*.txt"):
     arquivo_reviews_entrada = open(arquivoreviewssentrada, 'r', encoding="utf-8")
 
     diretorio = os.path.dirname(filename)[11:len(os.path.dirname(filename))]
+    #AJUSTE DE NOME DE APLICATIVO PARA O CASO DO DIRETÓRIO MUITO LONGO
+    if diretorio == "privacyfriendlyshoppinglist.secuso.org":
+        diretorio = "privacyfriendlyshoppinglist.secuso.org.privacyfriendlyshoppinglist"
 
     #LOOP DE LINHAS DENTRO DE CADA ARQUIVO
     for linha in arquivo_reviews_entrada:
@@ -217,8 +220,8 @@ for filename in Path(pasta).rglob("*.txt"):
         #linha_impressa = str(linha_json)+ ";" + str(linha_json['text']) + ";" + str(linha_json['replyText']) + "\n"
         #arquivo_comentarios_separado.write(linha_impressa)
         #PARADA PARA AGILIZAR TESTES
-        if numero_linhas_total == 600:
-           quit(-2)
+        #if numero_linhas_total == 600:
+        #   quit(-2)
 
     #FECHAMENTO DO ARQUIVO
     arquivo_reviews_entrada.close()
