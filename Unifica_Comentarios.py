@@ -29,7 +29,7 @@ keywordsfile = 'keywordslist_V2 - sem duplicidades.csv'
 
 #ABERTURA DOS ARQUIVOS
 arquivo_comentarios_separado = open(arquivocomentariosseparado, 'w',encoding="utf-8")
-arquivo_comentarios_separado_reduzido = open(arquivocomentariosseparadoreduzido, 'w',encoding="utf-8")
+#arquivo_comentarios_separado_reduzido = open(arquivocomentariosseparadoreduzido, 'w',encoding="utf-8")
 arquivo_entrada_keywords = open(keywordsfile, 'r',encoding="utf-8")
 
 #DEFINIÇÃO DO DICIONÁRIO DE LEITURA DO ARQUIVO DE ENTRADA
@@ -57,7 +57,7 @@ registro_header = "aplicativo" + ";" + \
                              "data" + ";" + \
                              "data_resposta" + \
                              "\n"
-arquivo_comentarios_separado_reduzido.write(registro_header)
+#arquivo_comentarios_separado_reduzido.write(registro_header)
 arquivo_comentarios_separado.write(registro_header)
 
 #CONTADORES DE LINHAS E ARQUIVOS
@@ -99,6 +99,7 @@ for filename in Path(pasta).rglob("*.txt"):
 
         #TRANSFORMA LINHA DO JSON EM STRING PARA GRAVAÇÃO EM ARQUIVO CSV
         linha_json_str = str(linha_json)
+        linha_json_str = linha_json_str.replace(";", "|")
         linha_json_str = linha_json_str.replace(";","|")
         linha_json_str = linha_json_str.replace("\t","|")
         linha_json_str = linha_json_str.replace("\n", "|")
@@ -113,6 +114,7 @@ for filename in Path(pasta).rglob("*.txt"):
         else:
             linha_json['text'] = linha_json['text'].strip('\n')
             texto = linha_json['text']
+        texto = texto.replace('"',"|")
         texto = texto.replace(";","|")
         texto = texto.replace("\t","|")
         texto = texto.replace("\n", "|")
@@ -157,7 +159,7 @@ for filename in Path(pasta).rglob("*.txt"):
                             str(linha_json['date']) + ";" + \
                             str(linha_json['replyDate']) + \
                             "\n"
-        arquivo_comentarios_separado_reduzido.write(registro_completo_reduzido)
+        #arquivo_comentarios_separado_reduzido.write(registro_completo_reduzido)
 
         saida = saida + 1
 

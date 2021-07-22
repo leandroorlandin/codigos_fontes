@@ -14,12 +14,18 @@ imprime_time()
 
 #DEFINIÇÃO DOS ARQUIVOS
 #TESTE:
-arquivoentrada = 'arquivocomentarios_semwcag_reduzido.txt'
+arquivoentrada = 'arquivocomentarios_semwcag.txt'
+#arquivoentrada = 'arquivocomentarios_semwcag_reduzido.txt'
 #arquivoentrada = 'arquivocomentarios_semwcag_reduzido-teste.txt'
 arquivosaida = 'arquivocomentarios_semwcag_reduzido_filtro.txt'
 
 #ABERTURA DOS ARQUIVOS
-arquivo_entrada = pd.read_csv(arquivoentrada,encoding='utf-8', delimiter=';')
+arquivo_entrada = pd.read_csv(arquivoentrada,encoding='utf-8', delimiter=';',
+                              dtype={"score": "string", "scoretext": "string"})
+print("tamanho arquivo entrada antes: ",len(arquivo_entrada))
+arquivo_entrada = arquivo_entrada.drop_duplicates()
+print("tamanho arquivo entrada depois: ",len(arquivo_entrada))
+
 ruleskeywordsfile = 'rules keywords - v1.csv'
 
 #DEFINIÇÃO DATAFRAME DE SAIDA
@@ -28,13 +34,12 @@ filtro = pd.DataFrame(columns =  ["aplicativo",
                                   "texto",
                                   "score",
                                   "scoretext",
-                                  "resposta",
-                                  "data",
-                                  "data_resposta",
+                                  "resposta","data","data_resposta",
                                   "regra"])
 
 #ABERTURA DOS ARQUIVOS
 arquivo_entrada_keywords = open(ruleskeywordsfile, 'r',encoding="utf-8")
+
 
 #DEFINIÇÃO DO DICIONÁRIO DE LEITURA DO ARQUIVO DE ENTRADA DE REGRAS
 expressions,\
@@ -53,16 +58,14 @@ i = 55
 print("INICIO DO LOOP")
 imprime_time()
 
-print('len(arquivo_entrada): ',len(arquivo_entrada))
-
 regra = i
 print('regra:', regra, '-', str(pandas_expressions[i]))
 arquivo_entrada['regra'] = regra
 
-string_filtro = str(pandas_expressions[i])
+string_filtro = pandas_expressions[i]
 print('0cont',string_filtro)
 print('0tipo', type(string_filtro))
-#    conjunto = arquivo_entrada[string_filtro]
+#conjunto = arquivo_entrada[string_filtro]
 conjunto = arquivo_entrada[((arquivo_entrada['texto'].str.contains('unable',case=False,na=False)) | (arquivo_entrada['texto'].str.contains('line',case=False,na=False))) & (arquivo_entrada['texto'].str.contains('overlap',case=False,na=False))]
 #    print(filtro)
 filtro = pd.concat([conjunto, filtro])
@@ -116,10 +119,11 @@ df = df[variavelx]
 print(df)
 '''
 
+
 # GRAVAÇÃO DOS DADOS DE SAÍDA
 # arquivo_entrada.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=False)
 print(conjunto)
-conjunto.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=False)
-print('len(arquivosaida)',len(arquivosaida))
+conjunto.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=True)
+print('tamanho do conjunto',len(conjunto))
 print("FIM DO PROGRAMA")
 imprime_time()
