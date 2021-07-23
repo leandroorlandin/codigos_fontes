@@ -64,11 +64,12 @@ while i < len(pandas_expressions):
     print('regra:', regra, '- ID_WCAG: ', str(id_dir[i]))
     arquivo_entrada['regra'] = regra
     arquivo_entrada['expression'] = expressions[i]
+    arquivo_entrada['WCAG'] = id_dir[i]
     print("comando a ser executado: ", pandas_expressions[i])
     exec('conjunto = '+pandas_expressions[i])
     print('itens selecionados na regra: ', len(conjunto))
     #    print(conjunto)
-    filtro = pd.concat([conjunto, filtro])
+    filtro = pd.concat([filtro,conjunto])
     print('itens selecionados acumulados: ', len(filtro))
     print("****************************************")
     print("")
