@@ -44,7 +44,6 @@ arquivo_entrada_keywords = open(ruleskeywordsfile, 'r',encoding="utf-8")
 #DEFINIÇÃO DO DICIONÁRIO DE LEITURA DO ARQUIVO DE ENTRADA DE REGRAS
 expressions,\
 pandas_expressions,\
-pandas_expressions_part2,\
 id_dir=np.loadtxt(ruleskeywordsfile,
                             delimiter=';',
                             unpack=True,
@@ -53,25 +52,28 @@ id_dir=np.loadtxt(ruleskeywordsfile,
 linhas = csv.reader(ruleskeywordsfile)
 
 #Inicia do 1 para não considerar o header
-i = 55
+i = 1
 
 print("INICIO DO LOOP")
 imprime_time()
 
-regra = i
-print('regra:', regra, '-', str(pandas_expressions[i]))
-arquivo_entrada['regra'] = regra
-
-string_filtro = pandas_expressions[i]
-print('0cont',string_filtro)
-print('0tipo', type(string_filtro))
-#conjunto = arquivo_entrada[string_filtro]
-conjunto = arquivo_entrada[((arquivo_entrada['texto'].str.contains('unable',case=False,na=False)) | (arquivo_entrada['texto'].str.contains('line',case=False,na=False))) & (arquivo_entrada['texto'].str.contains('overlap',case=False,na=False))]
-#    print(filtro)
-filtro = pd.concat([conjunto, filtro])
-#    print(filtro)
-
-i = i + 1
+while i < len(pandas_expressions):
+    regra = i
+    print("****************************************")
+    print("lógica: ",expressions[i])
+    print('regra:', regra, '- ID_WCAG: ', str(id_dir[i]))
+    arquivo_entrada['regra'] = regra
+    arquivo_entrada['expression'] = expressions[i]
+    print("comando a ser executado: ", pandas_expressions[i])
+    exec('conjunto = '+pandas_expressions[i])
+    print('itens selecionados na regra: ', len(conjunto))
+    #    print(conjunto)
+    filtro = pd.concat([conjunto, filtro])
+    print('itens selecionados acumulados: ', len(filtro))
+    print("****************************************")
+    print("")
+    #    print(filtro)
+    i = i + 1
 
 
 '''#while i < len(pandas_expressions):
@@ -122,8 +124,8 @@ print(df)
 
 # GRAVAÇÃO DOS DADOS DE SAÍDA
 # arquivo_entrada.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=False)
-print(conjunto)
-conjunto.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=True)
-print('tamanho do conjunto',len(conjunto))
+#print(filtro)
+print('tamanho final do conjunto',len(filtro))
+filtro.to_csv(arquivosaida, sep=';', encoding='utf-8', header='true', index=False)
 print("FIM DO PROGRAMA")
 imprime_time()

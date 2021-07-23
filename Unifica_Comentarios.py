@@ -24,7 +24,7 @@ contagem_displays = 500
 
 #NOMES DE ARQUIVOS
 arquivocomentariosseparado = 'arquivocomentarios_semwcag.txt'
-arquivocomentariosseparadoreduzido = 'arquivocomentarios_semwcag_reduzido.txt'
+#arquivocomentariosseparadoreduzido = 'arquivocomentarios_semwcag_reduzido.txt'
 keywordsfile = 'keywordslist_V2 - sem duplicidades.csv'
 
 #ABERTURA DOS ARQUIVOS
