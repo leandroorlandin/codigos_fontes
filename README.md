@@ -79,4 +79,4 @@ Código: "diretorio = os.path.dirname(filename)[12:len(os.path.dirname(filename)
 Entrada 1: Diretório que contém os comentários.
 Entrada 2: "keywordslist_V2 - sem duplicidades.csv" : contém a lista de palavras chave a serem filtradas
 Saída 1: "arquivocomentarios_separado_Vx.txt" : arquivo com informações dos comentários
-Saída 2: "arquivocomentarios_separado_reduzido_Vx.txt" arquivo com informações dos comentários com truncate de 2047 posições. Motivo: tentativa de leitura dos dados no Quicksight da AWS
+Saída 2: "arquivocomentarios_separado_reduzido_Vx.txt" arquivo com informações dos comentários com truncate de 2047 posições. Motivo: tentativa de leitura dos dados no Quicksight da AWS. O Quicksight foi desconsiderado.
